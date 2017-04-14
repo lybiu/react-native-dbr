@@ -1,6 +1,6 @@
 {
   "name": "react-native-dbr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dynamsoft Barcode Reader for React Native",
   "license": "MIT",
   "main": "index.js",
