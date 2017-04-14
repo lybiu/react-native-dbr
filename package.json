@@ -1,0 +1,25 @@
+{
+  "name": "react-native-dbr",
+  "version": "1.0.0",
+  "description": "Dynamsoft Barcode Reader for React Native",
+  "license": "MIT",
+  "main": "index.js",
+  "author": {
+    "name": "Dynamsoft",
+    "email": "support@dynamsoft.com",
+    "url": "http://www.dynamsoft.com/Products/Dynamic-Barcode-Reader.aspx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dynamsoft-dbr/react-native-dbr.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "barcode",
+    "QR code",
+    "DataMatrix",
+    "PDF417",
+    "linear barcode"
+  ]
+}
