@@ -55,3 +55,6 @@ react-native run-android
     ```
     If you do not have a valid license, please contact <support@dynamsoft.com>. With invalid license, the SDK can work but will not return a full result.
     ![Invalid license](http://www.codepool.biz/wp-content/uploads/2017/04/react-native-barcode-license.png)
+
+## Blog
+[Android Barcode Detection Component for React Native](http://www.codepool.biz/android-barcode-detection-component-react-native.html)
