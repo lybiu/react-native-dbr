@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -29,15 +28,11 @@ import com.dynamsoft.barcode.FinishCallback;
 import com.dynamsoft.barcode.ReadResult;
 import com.dynamsoft.barcodescanner.R;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Date;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class DBR extends Activity implements Camera.PreviewCallback {
     public static String TAG = "DBRDemo";
+    public static String ACTION_BARCODE = "com.dynamsoft.dbr";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,24 +63,20 @@ public class DBR extends Activity implements Camera.PreviewCallback {
         String license = "";
 
         Intent intent = getIntent();
-        if (intent.getAction().equals("com.dynamsoft.dbr")) {
+        if (intent.getAction().equals(ACTION_BARCODE)) {
             mIsIntent = true;
             license = intent.getStringExtra("license");
-            if (license != null) {
-
-            }
         }
 
         mBarcodeReader = new BarcodeReader(license);
     }
 
     static final int PERMISSIONS_REQUEST_CAMERA = 473;
-    static final int RC_BARCODE_TYPE = 8563;
     private FrameLayout mPreview = null;
     private CameraPreview mSurfaceHolder = null;
     private Camera mCamera = null;
     private BarcodeReader mBarcodeReader;
-    private long mBarcodeFormat = Barcode.OneD | Barcode.QR_CODE | Barcode.PDF417 |Barcode.DATAMATRIX;
+    private long mBarcodeFormat = Barcode.OneD | Barcode.QR_CODE | Barcode.PDF417 | Barcode.DATAMATRIX;
     private ImageView mFlashImageView;
     private TextView mFlashTextView;
     private RectLayer mRectLayer;
@@ -188,7 +179,6 @@ public class DBR extends Activity implements Camera.PreviewCallback {
                     mCamera.setParameters(cameraParameters);
                 }
 
-
                 Message message = handler.obtainMessage(OPEN_CAMERA, 1);
                 message.sendToTarget();
             }
@@ -227,7 +217,6 @@ public class DBR extends Activity implements Camera.PreviewCallback {
     }
 
     private boolean mFinished = true;
-    private long mStartTime;
     private final static int READ_RESULT = 1;
     private final static int OPEN_CAMERA = 2;
     private final static int RELEASE_CAMERA = 3;
@@ -240,9 +229,6 @@ public class DBR extends Activity implements Camera.PreviewCallback {
             switch (msg.what) {
                 case READ_RESULT:
                     ReadResult result = (ReadResult)msg.obj;
-                    TextView view = (TextView) findViewById(R.id.textView);
-                    //long lTime = (SystemClock.currentThreadTimeMillis() - mStartTime);
-                    long lTime = new Date().getTime()-mStartTime;
                     Barcode barcode = result.barcodes == null ? null : result.barcodes[0];
                     if (barcode != null) {
                         if (mIsIntent) {
@@ -251,6 +237,7 @@ public class DBR extends Activity implements Camera.PreviewCallback {
                             data.putExtra("SCAN_RESULT_FORMAT", barcode.formatString);
                             DBR.this.setResult(DBR.RESULT_OK, data);
                             DBR.this.finish();
+                            mFinished = true;
                             return;
                         }
 
@@ -276,7 +263,6 @@ public class DBR extends Activity implements Camera.PreviewCallback {
                         barcode.boundingBox.top = left;
                         barcode.boundingBox.right = height + barcode.boundingBox.left;
                         barcode.boundingBox.bottom = width + barcode.boundingBox.top;
-                        builder.setMessage(barcode).setExtraInfo(lTime/1000f + "");
                         CustomDialog dialog = builder.create(R.layout.result, R.style.ResultDialog);
                         dialog.getWindow().setLayout(mRectLayer.getWidth() * 10 / 12, (mRectLayer.getHeight() >> 1) + 16);
                         dialog.show();
@@ -299,37 +285,15 @@ public class DBR extends Activity implements Camera.PreviewCallback {
                     }
                     break;
                 case RELEASE_CAMERA:
-
                     break;
             }
         }
     };
 
-    private boolean isFirstTime = true;
-
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-        if (isFirstTime) {
-            isFirstTime = false;
-            Log.i("xiao", "width: " + camera.getParameters().getPreviewSize().width + ", height: " + camera.getParameters().getPreviewSize().height);
-            try {
-                File file = new File(Environment.getExternalStorageDirectory() + "/tmp.yuv");
-                Log.i("xiao", "path: " + file.getAbsolutePath());
-                FileOutputStream output = new FileOutputStream(file);
-                output.write(data);
-                output.flush();
-                output.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
         if (mFinished && !mIsDialogShowing) {
             mFinished = false;
-            //mStartTime = SystemClock.currentThreadTimeMillis();
-            mStartTime = new Date().getTime();
             Camera.Size size = camera.getParameters().getPreviewSize();
             mImageHeight = size.height;
             mBarcodeReader.readSingleAsync(data, size.width, size.height, mBarcodeFormat, new FinishCallback() {
