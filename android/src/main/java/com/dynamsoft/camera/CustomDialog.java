@@ -3,6 +3,7 @@ package com.dynamsoft.camera;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -14,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
-import com.dynamsoft.barcode.Barcode;
+import com.dynamsoft.barcode.TextResult;
 import com.dynamsoft.barcodescanner.R;
 
 public class CustomDialog extends Dialog {
@@ -39,11 +40,13 @@ public class CustomDialog extends Dialog {
         private String title;
         private String message;
         private Spanned spanned;
-        private Barcode barcode;
+        private TextResult barcode;
         private String extraInfo;
         private String positiveButtonText;
         private View contentView;
         private OnClickListener positiveButtonClickListener;
+
+        private Rect mViewRegion;
 
         public Builder(Context context) {
             this.context = context;
@@ -59,8 +62,9 @@ public class CustomDialog extends Dialog {
             return this;
         }
 
-        public Builder setMessage(Barcode barcode) {
+        public Builder setMessage(TextResult barcode,Rect viewRegion) {
             this.barcode = barcode;
+            mViewRegion = viewRegion;
             return this;
         }
 
@@ -149,8 +153,8 @@ public class CustomDialog extends Dialog {
 
             if (barcode != null) {
                 TextView messageView = ((TextView) layout.findViewById(R.id.message));
-                messageView.setText("Type: " + barcode.formatString + "\r\nValue: " + barcode.displayValue +
-                        "\r\nRegion: {Left: " + barcode.boundingBox.left + ", Top: " + barcode.boundingBox.top + ", Width: " + barcode.boundingBox.width() + ", Height: " + barcode.boundingBox.height() + "}");
+                messageView.setText("Type: " + barcode.barcodeFormatString + "\r\nValue: " + barcode.barcodeText +
+                        "\r\nRegion: {Left: " + mViewRegion.left + ", Top: " + mViewRegion.top + ", Right: " + mViewRegion.right + ", Bottom: " + mViewRegion.bottom + "}");
                if (extraInfo != null) {
                    TextView tvTime = (TextView)layout.findViewById(R.id.tvTime);
                    tvTime.setText(extraInfo + " seconds");

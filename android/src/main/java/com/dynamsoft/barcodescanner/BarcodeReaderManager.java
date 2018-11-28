@@ -61,7 +61,7 @@ public class BarcodeReaderManager extends ReactContextBaseJavaModule {
     };
 
     @ReactMethod
-    public void readBarcode(String license, Callback resultCallback, Callback errorCallback) {
+    public void readBarcode(String licenseKey, Callback resultCallback, Callback errorCallback) {
         mResultCallback = resultCallback;
 
         Activity currentActivity = getCurrentActivity();
@@ -73,11 +73,11 @@ public class BarcodeReaderManager extends ReactContextBaseJavaModule {
 
         Intent cameraIntent = new Intent(currentActivity.getBaseContext(), DBR.class);
         cameraIntent.setAction("com.dynamsoft.dbr");
-        cameraIntent.putExtra("license", license);
+        cameraIntent.putExtra("licenseKey", licenseKey);
 
         // avoid calling other phonegap apps
         cameraIntent.setPackage(currentActivity.getApplicationContext().getPackageName());
-
+        //currentActivity.startActivity(cameraIntent);
         currentActivity.startActivityForResult(cameraIntent, REQUEST_CODE);
     }
 }

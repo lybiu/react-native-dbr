@@ -22,7 +22,7 @@ export default class Example extends Component {
   }
 
   onButtonPress() {
-    BarcodeReaderManager.readBarcode('C6154D1B6B9BD0CBFB12D32099F20B35', (msg) => {
+    BarcodeReaderManager.readBarcode('your license key', (msg) => {
       this.setState({result: msg});
     }, (err) => {
       console.log(err);
