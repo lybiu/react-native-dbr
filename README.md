@@ -6,7 +6,6 @@ The module only works for **Android** now.
 ```bash
 cd Example
 npm install
-react-native start > /dev/null 2>&1 &  curl "http://localhost:8081/index.android.bundle?platform=android" -o "android/app/src/main/assets/index.android.bundle"
 react-native run-android
 ```
 
