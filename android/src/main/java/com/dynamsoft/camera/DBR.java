@@ -79,7 +79,14 @@ public class DBR extends Activity implements Camera.PreviewCallback {
         try {
             mBarcodeReader = new BarcodeReader("t0068MgAAAFym/xLiM4ibsKEAFOu11gQUPPG1zDEDejtLlVwLNXRiM6Hoh4ec/HuyZUlvn6srXdgOQvDFv1QXiwzIRS4pHIs=");//this is a trail license
             //
-            mBarcodeReader.initLicenseFromServer("https://www.dynamsoft.com/api/DbrLicense/Authorize",licenseKey);
+            mBarcodeReader.initLicenseFromServer("https://www.dynamsoft.com/api/DbrLicense/Authorize",licenseKey, new DBRServerLicenseVerificationListener() {
+                @Override
+                public void licenseVerificationCallback(boolean isSuccess, Exception error) {
+                    if (!isSuccess) {
+						Log.i(TAG, "DBR license verify failed due to " + error.getMessage())；
+					}
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
