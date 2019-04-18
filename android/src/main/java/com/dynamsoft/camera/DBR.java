@@ -1,4 +1,5 @@
-﻿package com.dynamsoft.camera;
+package com.dynamsoft.camera;
+
 
 import android.Manifest;
 import android.app.Activity;
@@ -29,6 +30,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dynamsoft.barcode.DBRServerLicenseVerificationListener;
 import com.dynamsoft.barcode.BarcodeReader;
 import com.dynamsoft.barcode.BarcodeReaderException;
 import com.dynamsoft.barcode.EnumImagePixelFormat;
@@ -79,12 +81,14 @@ public class DBR extends Activity implements Camera.PreviewCallback {
         try {
             mBarcodeReader = new BarcodeReader("t0068MgAAAFym/xLiM4ibsKEAFOu11gQUPPG1zDEDejtLlVwLNXRiM6Hoh4ec/HuyZUlvn6srXdgOQvDFv1QXiwzIRS4pHIs=");//this is a trail license
             //
-            mBarcodeReader.initLicenseFromServer("https://www.dynamsoft.com/api/DbrLicense/Authorize",licenseKey, new DBRServerLicenseVerificationListener() {
+            mBarcodeReader.initLicenseFromServer("https://www.dynamsoft.com/api/DbrLicense/Authorize",licenseKey,
+		new DBRServerLicenseVerificationListener() {
                 @Override
                 public void licenseVerificationCallback(boolean isSuccess, Exception error) {
                     if (!isSuccess) {
 						Log.i(TAG, "DBR license verify failed due to " + error.getMessage());
 					}
+
                 }
             });
         } catch (Exception e) {
