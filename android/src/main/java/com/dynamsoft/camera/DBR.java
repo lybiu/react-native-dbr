@@ -1,4 +1,4 @@
-package com.dynamsoft.camera;
+﻿package com.dynamsoft.camera;
 
 import android.Manifest;
 import android.app.Activity;
@@ -83,7 +83,7 @@ public class DBR extends Activity implements Camera.PreviewCallback {
                 @Override
                 public void licenseVerificationCallback(boolean isSuccess, Exception error) {
                     if (!isSuccess) {
-						Log.i(TAG, "DBR license verify failed due to " + error.getMessage())；
+						Log.i(TAG, "DBR license verify failed due to " + error.getMessage());
 					}
                 }
             });
