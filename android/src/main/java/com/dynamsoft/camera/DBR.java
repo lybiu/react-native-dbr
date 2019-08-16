@@ -79,17 +79,17 @@ public class DBR extends Activity implements Camera.PreviewCallback {
         }
 
         try {
-            mBarcodeReader = new BarcodeReader("t0068MgAAAFym/xLiM4ibsKEAFOu11gQUPPG1zDEDejtLlVwLNXRiM6Hoh4ec/HuyZUlvn6srXdgOQvDFv1QXiwzIRS4pHIs=");//this is a trail license
+            mBarcodeReader = new BarcodeReader(licenseKey);
             //
-            mBarcodeReader.initLicenseFromServer("https://www.dynamsoft.com/api/DbrLicense/Authorize",licenseKey,
-		new DBRServerLicenseVerificationListener() {
-                @Override
-                public void licenseVerificationCallback(boolean isSuccess, Exception error) {
-                    if (!isSuccess) {
-			Log.i(TAG, "DBR license verify failed due to " + error.getMessage());
-			}
-		}
-            });
+//            mBarcodeReader.initLicenseFromServer("https://www.dynamsoft.com/api/DbrLicense/Authorize",licenseKey,
+//		new DBRServerLicenseVerificationListener() {
+//                @Override
+//                public void licenseVerificationCallback(boolean isSuccess, Exception error) {
+//                    if (!isSuccess) {
+//			Log.i(TAG, "DBR license verify failed due to " + error.getMessage());
+//			}
+//		}
+//            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -199,7 +199,9 @@ public class DBR extends Activity implements Camera.PreviewCallback {
                 if (mCamera != null) {
                     mCamera.setDisplayOrientation(90);
                     Camera.Parameters cameraParameters = mCamera.getParameters();
-                    cameraParameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                    if (cameraParameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+			cameraParameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+		    }
                     mCamera.setParameters(cameraParameters);
                 }
 
@@ -330,8 +332,7 @@ public class DBR extends Activity implements Camera.PreviewCallback {
             int[] strides = yuvImage.getStrides();
 
             try {
-                mBarcodeReader.decodeBuffer(yuvImage.getYuvData(), width, height, strides[0], EnumImagePixelFormat.IPF_NV21, "");
-                TextResult[] readResult = mBarcodeReader.getAllTextResults();
+                TextResult[] readResult = mBarcodeReader.decodeBuffer(yuvImage.getYuvData(), width, height, strides[0], EnumImagePixelFormat.IPF_NV21, "");
                 Message message = handler.obtainMessage(READ_RESULT, readResult);
                 message.sendToTarget();
 
