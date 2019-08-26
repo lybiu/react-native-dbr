@@ -1,12 +1,11 @@
 # Barcode Detection Module for React Native
-The module only works for **Android** now.
 
 ## How to Run the Example
 
 ```bash
 cd Example
 npm install
-react-native run-android
+react-native run-android or react-native run-ios
 ```
 
 ### Screenshots
@@ -44,6 +43,7 @@ react-native run-android
 4. Use the module in **index.android.js**:
 
     ```javascript
+    In Android:
     import BarcodeReaderManager from 'react-native-dbr';
 
     BarcodeReaderManager.readBarcode('your license key', (msg) => {
@@ -52,6 +52,13 @@ react-native run-android
     (err) => {
         console.log(err);
     });
+    In iOS:
+    import BarcodeReaderManager from 'react-native-dbr';
+    BarcodeReaderManager.readBarcode('your license here').then((msg) =>{
+      this.setState({result: msg});
+      }).catch((err) => {
+        console.log(err);
+      });
     ```
     If you do not have a valid license, please contact <support@dynamsoft.com>. With invalid license, the SDK can work but will not return a full result.
     ![Invalid license](http://www.codepool.biz/wp-content/uploads/2017/04/react-native-barcode-license.png)
