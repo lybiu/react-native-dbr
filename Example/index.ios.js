@@ -9,22 +9,35 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Button
 } from 'react-native';
 
+import BarcodeReaderManager from 'react-native-dbr';
+
 export default class Example extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      result: 'N/A'
+    };
+    this.onButtonPress = this.onButtonPress.bind(this);
+  }
+
+  onButtonPress() {
+    BarcodeReaderManager.readBarcode('your license here').then((events) =>{
+      this.setState({result: events});
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
+        <Button title='Read Barcode' onPress={this.onButtonPress}/>
+        <Text style={styles.display}>
+          Barcode Result : {this.state.result}
         </Text>
       </View>
     );
@@ -47,6 +60,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  display: {
+    fontSize: 20,
+    textAlign: 'center',
+    color:'#FFD700',
+    margin: 10
   },
 });
 

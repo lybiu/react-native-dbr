@@ -10,8 +10,8 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
-#import <React/RCTRootView.h>
-
+#import "../../../ios/BarcodeReaderManagerViewController.h"
+#import "../../../ios/DbrManager.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -20,18 +20,40 @@
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+  _rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"Example"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
-  rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
-
+  _rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+ 
+  
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [UIViewController new];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
+  _rootViewController = [UIViewController new];
+  _rootViewController.view = _rootView;
+  
+//  self.window.rootViewController = rootViewController;
+  _nav = [[UINavigationController alloc] initWithRootViewController:_rootViewController];
+  self.window.rootViewController = _nav;
+  _nav.navigationBarHidden = YES;
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doNotification:) name:@"readBarcode" object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backToJs:) name:@"backToJs" object:nil];
   [self.window makeKeyAndVisible];
   return YES;
 }
 
+-(void)doNotification:(NSNotification *)notification{
+  BarcodeReaderManagerViewController* dbrMangerController = [[BarcodeReaderManagerViewController alloc] init];
+  dbrMangerController.dbrManager = [[DbrManager alloc] initWithLicense:notification.userInfo[@"inputValue"]];
+  [self.nav pushViewController:dbrMangerController animated:YES];
+}
+
+-(void)backToJs:(NSNotification *)notification{
+  [self.nav popToViewController:self.rootViewController animated:YES];
+}
+
+//移除监听者
+-(void)dealloc{
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:@"readBarcode" object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:@"backToJs" object:nil];
+}
 @end
