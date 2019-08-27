@@ -43,7 +43,6 @@ react-native run-android or react-native run-ios
 4. Use the module in **index.android.js**:
 
     ```javascript
-    In Android:
     import BarcodeReaderManager from 'react-native-dbr';
 
     BarcodeReaderManager.readBarcode('your license key', (msg) => {
@@ -52,14 +51,16 @@ react-native run-android or react-native run-ios
     (err) => {
         console.log(err);
     });
-    In iOS:
-    import BarcodeReaderManager from 'react-native-dbr';
-    BarcodeReaderManager.readBarcode('your license here').then((msg) =>{
-      this.setState({result: msg});
-      }).catch((err) => {
-        console.log(err);
-      });
     ```
+   Use the module in **index.ios.js**:
+   ```javascript
+   import BarcodeReaderManager from 'react-native-dbr';
+   BarcodeReaderManager.readBarcode('your license here').then((msg) =>{
+       this.setState({result: msg});
+       }).catch((err) => {
+         console.log(err);
+       });
+   ```
     If you do not have a valid license, please contact <support@dynamsoft.com>. With invalid license, the SDK can work but will not return a full result.
     ![Invalid license](http://www.codepool.biz/wp-content/uploads/2017/04/react-native-barcode-license.png)
 
