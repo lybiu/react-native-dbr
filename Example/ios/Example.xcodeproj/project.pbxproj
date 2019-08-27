@@ -1053,6 +1053,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = W6PESGXW9M;
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../node_modules/react-native-dbr/ios",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
@@ -1075,6 +1076,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W6PESGXW9M;
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../node_modules/react-native-dbr/ios",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
