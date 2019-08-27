@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		086327F12313ED2300ADA7D9 /* DynamsoftBarcodeReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 086327F02313ED2300ADA7D9 /* DynamsoftBarcodeReader.framework */; };
 		6883C4E3230FD89C009335C1 /* DbrManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6883C4E2230FD89C009335C1 /* DbrManager.m */; };
 		6883C4E8230FD908009335C1 /* BarcodeReaderManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6883C4E7230FD908009335C1 /* BarcodeReaderManagerViewController.m */; };
-		6883C54E230FDC8D009335C1 /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6883C54D230FDC8D009335C1 /* libc++.1.tbd */; };
-		6883C55D230FDD30009335C1 /* DynamsoftBarcodeReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6883C550230FDCAB009335C1 /* DynamsoftBarcodeReader.framework */; };
 		B3E7B58A1CC2AC0600A0062D /* BarcodeReaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* BarcodeReaderManager.m */; };
 /* End PBXBuildFile section */
 
@@ -27,13 +26,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		086327F02313ED2300ADA7D9 /* DynamsoftBarcodeReader.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DynamsoftBarcodeReader.framework; sourceTree = "<group>"; };
 		134814201AA4EA6300B7C361 /* libBarcodeReaderManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBarcodeReaderManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6883C4E1230FD870009335C1 /* DbrManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DbrManager.h; sourceTree = "<group>"; };
 		6883C4E2230FD89C009335C1 /* DbrManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DbrManager.m; sourceTree = "<group>"; };
 		6883C4E6230FD8F8009335C1 /* BarcodeReaderManagerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarcodeReaderManagerViewController.h; sourceTree = "<group>"; };
 		6883C4E7230FD908009335C1 /* BarcodeReaderManagerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarcodeReaderManagerViewController.m; sourceTree = "<group>"; };
-		6883C54D230FDC8D009335C1 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
-		6883C550230FDCAB009335C1 /* DynamsoftBarcodeReader.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DynamsoftBarcodeReader.framework; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* BarcodeReaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeReaderManager.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* BarcodeReaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeReaderManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -43,8 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6883C54E230FDC8D009335C1 /* libc++.1.tbd in Frameworks */,
-				6883C55D230FDD30009335C1 /* DynamsoftBarcodeReader.framework in Frameworks */,
+				086327F12313ED2300ADA7D9 /* DynamsoftBarcodeReader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,8 +73,7 @@
 		6883C54C230FDC8D009335C1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6883C550230FDCAB009335C1 /* DynamsoftBarcodeReader.framework */,
-				6883C54D230FDC8D009335C1 /* libc++.1.tbd */,
+				086327F02313ED2300ADA7D9 /* DynamsoftBarcodeReader.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -121,6 +117,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 58B511D21A9E6C8500147676;
