@@ -51,7 +51,7 @@
   [self.nav popToViewController:self.rootViewController animated:YES];
 }
 
-//移除监听者
+// remove listeners
 -(void)dealloc{
   [[NSNotificationCenter defaultCenter] removeObserver:self name:@"readBarcode" object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:@"backToJs" object:nil];
