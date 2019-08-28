@@ -17,18 +17,19 @@
 @synthesize callback;
 RCT_EXPORT_MODULE(BarcodeReaderManager)
 
-//单参数 单回调时使用
+// Single parameter, used in a single callback
 //RCT_EXPORT_METHOD(readBarcode:(NSString *)key callback:(RCTResponseSenderBlock)callback){
 //    self.callback = callback;
-//    //主要这里必须使用主线程发送,不然有可能失效
+//    // It must be sent with the main thread, otherwise it may fail.
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        [[NSNotificationCenter defaultCenter]postNotificationName:@"readBarcode" object:nil userInfo:@{@"inputValue": key}];
 //    });
-//    //返回结果
+//    // Return results
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(result:) name:@"callback" object:nil];
 //}
 
-//Promise 多参数 多回调时使用
+//Promise 
+//multiple parameters, used in multiple callbacks
 RCT_REMAP_METHOD(readBarcode,key:(NSString *)key resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
     _resolveBlock = resolve;
@@ -36,15 +37,15 @@ RCT_REMAP_METHOD(readBarcode,key:(NSString *)key resolve:(RCTPromiseResolveBlock
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter]postNotificationName:@"readBarcode" object:nil userInfo:@{@"inputValue": key}];
     });
-    //返回结果
+    // Return results
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(result:) name:@"callback" object:nil];
 }
 
-//执行获取结果的监听
+// Perform listening to get results
 -(void)result:(NSNotification *)notification{
     result = [NSString stringWithString:notification.userInfo[@"result"]];
     
-/*  单回调
+/*  single callback
     NSString* error = @"something wrong !";
 //    callback
     if(result != NULL && callback !=nil){
@@ -56,7 +57,7 @@ RCT_REMAP_METHOD(readBarcode,key:(NSString *)key resolve:(RCTPromiseResolveBlock
     }
 */
     
-    //Promise
+    // Promise
     if(result != NULL && _resolveBlock != nil){
         _resolveBlock(@[result]);
         _resolveBlock = nil;
