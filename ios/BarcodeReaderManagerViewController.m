@@ -205,7 +205,7 @@
         bottom = bottom > [barcode.localizationResult.resultPoints[i] CGPointValue].y ? bottom : [barcode.localizationResult.resultPoints[i] CGPointValue].y;
     }
     NSString* msgText = [NSString stringWithFormat:@"\nType: %@\n\nValue: %@\n\nRegion: {Left: %.f, Top: %.f, Right: %.f, Bottom: %.f}\n\nInterval: %.03f seconds\n\n",
-                         [self barcodeTypeStringValue:barcode.barcodeFormat], barcode.barcodeText, left, top, right, bottom, timeInterval];
+                         barcode.barcodeFormatString, barcode.barcodeText, left, top, right, bottom, timeInterval];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter]postNotificationName:@"callback" object:nil userInfo:@{@"result": msgText}];
@@ -333,45 +333,6 @@
     tempFrame.origin.y = (heightMargin + (width - widthMargin * 2) + height) * 0.5 - flashButton.bounds.size.height * 0.5;
     [flashButton setFrame:tempFrame];
     return;
-}
-
-#pragma mark - Addition explaination
-
-- (NSString*)barcodeTypeStringValue:(EnumBarcodeFormat)type {
-    switch (type) {
-        case EnumBarcodeFormatCODE39:
-            return @"CODE 39";
-        case EnumBarcodeFormatCODE128:
-            return @"CODE 128";
-        case EnumBarcodeFormatCODE93:
-            return @"CODE 93";
-        case EnumBarcodeFormatCODABAR:
-            return @"CODABAR";
-        case EnumBarcodeFormatITF:
-            return @"ITF";
-        case EnumBarcodeFormatEAN13:
-            return @"EAN-13";
-        case EnumBarcodeFormatEAN8:
-            return @"EAN-8";
-        case EnumBarcodeFormatUPCA:
-            return @"UPC-A";
-        case EnumBarcodeFormatUPCE:
-            return @"UPC-E";
-        case EnumBarcodeFormatINDUSTRIAL:
-            return @"INDUSTRIAL";
-        case EnumBarcodeFormatPDF417:
-            return @"PDF417";
-        case EnumBarcodeFormatQRCODE:
-            return @"QRCODE";
-        case EnumBarcodeFormatDATAMATRIX:
-            return @"DataMatrix";
-        case EnumBarcodeFormatAZTEC:
-            return @"AZTEC";
-        case EnumBarcodeFormatCODE39EXTENDED:
-            return @"CODE39EXTENDED";
-        default:
-            return @"Unknown code";
-    }
 }
 
 @end
